@@ -1,0 +1,444 @@
+<!-- #/engine/head/encode/:BEGIN -->
+<!DOCTYPE html>
+<html lang="en">
+<!-- 
+
+    #   TITLE   : Highspot Application Interface
+    #   DESC    : This is the interface for the PVTT Application, which is a collection of tools and features designed to enhance user experience and provide additional functionality. The interface is designed to be user-friendly and intuitive, allowing users to easily navigate and access the various features of the application.
+    #   PROPRIETOR: VARSITYMARKET_TECHNOLOGIES
+    #   VERSION : v2.1.1.1
+    #   AUTHOR  : LEVIDOC AGENCY  
+    #   RELEASE : 2026/07/18
+    #   CATEGORY: ONLINE STORE
+
+-->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Highspot | The right way to get high</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Archivo', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: '#32CD32',
+                        dark: '#050505',
+                        light: '#F4F4F4'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #050505;
+            color: #F4F4F4;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        :root {
+            --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        /* Load & Scroll Animations */
+        .clip-reveal {
+            clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%);
+            transition: clip-path 1.2s var(--ease-out-expo);
+        }
+        .clip-reveal.is-visible {
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+        }
+
+        .fade-up {
+            opacity: 0;
+            transform: translateY(80px);
+            transition: opacity 1s var(--ease-out-expo), transform 1s var(--ease-out-expo);
+        }
+        .fade-up.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .delay-1 { transition-delay: 0.2s; }
+        .delay-2 { transition-delay: 0.4s; }
+
+        /* Marquee */
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .marquee-container {
+            display: flex;
+            width: 200%;
+            animation: marquee 15s linear infinite;
+        }
+
+        /* Hover Effects */
+        .img-wrap {
+            overflow: hidden;
+        }
+        .img-wrap img {
+            transition: transform 1.2s var(--ease-out-expo);
+        }
+        .img-wrap:hover img {
+            transform: scale(1.08);
+        }
+
+        .product-card:hover .cart-btn {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .cart-btn {
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.6s var(--ease-out-expo);
+        }
+
+        /* Nav & Menus */
+        #mobile-menu {
+            transition: transform 0.8s var(--ease-out-expo);
+            transform: translateY(-100%);
+        }
+        #mobile-menu.menu-open {
+            transform: translateY(0);
+        }
+        .nav-link { position: relative; }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background-color: #F4F4F4;
+            transition: width 0.4s var(--ease-out-expo);
+        }
+        .nav-link:hover::after { width: 100%; }
+    </style>
+</head>
+<!-- #/engine/head/encode/:END; -->
+  
+  <!-- 
+    #   SCRIPTS_CHECK : highspot.body.php
+-->
+
+
+
+
+
+
+<body class="selection:bg-brand selection:text-white">
+
+    <!-- Navbar -->
+  <!-- #/engine/navbar/encode/:BEGIN -->
+    <!-- DESKTOP & MOBILE HEADER -->
+    <header class="fixed top-0 w-full z-50 bg-dark/95 border-b-4 border-brand fade-up is-visible">
+        <div class="max-w-[2000px] mx-auto px-6 py-6 flex justify-between items-center">
+            <!-- LOGO -->
+            <a href="#" class="flex items-center gap-6 group">
+                <img src=" highspot.jpeg" alt="Logo" class="w-16 h-16 object-contain group-hover:scale-110 transition-transform duration-500 var(--ease-out-expo)">
+            </a>
+
+            <!-- NAV -->
+            <nav class="hidden lg:flex gap-12 absolute left-1/2 -translate-x-1/2">
+                <a href="#collections" class="nav-link text-3xl font-black uppercase">Collections</a>
+                <a href="#collections" class="nav-link text-3xl font-black uppercase">Contact</a>
+                <a href="#shop" class="nav-link text-3xl font-black uppercase">Shop</a>
+                <a href="#editorial" class="nav-link text-3xl font-black uppercase">Membership</a>
+            </nav>
+
+            <!-- UTILITIES -->
+            <div class="flex items-center gap-8">
+                <button class="hidden lg:flex text-3xl font-black uppercase hover:text-brand transition-colors items-center gap-4">
+                    <img src="search.png" style="height: auto; width: 2.5rem;">
+                </button>
+
+                <button class="hidden lg:flex text-3xl font-black uppercase hover:text-brand transition-colors items-center gap-4">
+                    <img src="cart.png" style="height: auto; width: 2.5rem;">
+                </button>
+
+                <button class="hidden lg:flex text-3xl font-black uppercase hover:text-brand transition-colors items-center gap-4">
+                    <img src="profile.png" style="height: auto; width: 2.5rem;">
+                </button>
+
+                <button id="menu-btn" class="lg:hidden text-brand hover:text-white transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="4" stroke="currentColor" class="w-16 h-16">
+                        <path stroke-linecap="square" stroke-linejoin="miter" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- MOBILE MENU -->
+    <div id="mobile-menu" class="fixed inset-0 z-40 bg-brand flex flex-col justify-center items-center">
+        <nav class="flex flex-col gap-12 text-center">
+            <a href="#collections" class="mobile-link text-6xl font-black uppercase hover:text-dark transition-colors">Collections</a>
+            <a href="#shop" class="mobile-link text-6xl font-black uppercase hover:text-dark transition-colors">Shop</a>
+            <a href="#shop" class="mobile-link text-6xl font-black uppercase hover:text-dark transition-colors">Contact</a>
+            <a href="#editorial" class="mobile-link text-6xl font-black uppercase hover:text-dark transition-colors">Membership</a>
+            
+            <a href="#" class="mobile-link text-6xl font-black uppercase hover:text-dark transition-colors mt-12 bg-dark text-white px-8 py-4">
+                <div>
+                <button class=" lg:flex text-3xl font-black uppercase hover:text-brand transition-colors items-center gap-4">
+                    <img src="search.png" style="height: auto; width: 2.5rem;">
+                </button>
+
+                <button class=" lg:flex text-3xl font-black uppercase hover:text-brand transition-colors items-center gap-4">
+                    <img src="cart.png" style="height: auto; width: 2.5rem;">
+                </button>
+
+                <button class=" lg:flex text-3xl font-black uppercase hover:text-brand transition-colors items-center gap-4">
+                    <img src="profile.png" style="height: auto; width: 2.5rem;">
+                </button>
+            </div>
+            </a>
+        </nav>
+    </div>
+
+<!-- #/engine/navbar/encode/:END; -->
+
+    <c>
+        
+    <!-- HERO SECTION -->
+    <main class="pt-56 pb-20 px-6 max-w-[2000px] mx-auto min-h-screen flex flex-col justify-center border-b-8 border-white/10">
+        <div class="flex flex-col xl:flex-row items-end justify-between gap-16 relative z-10 w-full">
+            <div class="w-full xl:w-2/3">
+                <h1 class="text-[11vw] xl:text-[9vw] leading-[0.85] font-black uppercase tracking-tighter">
+                    <div class="overflow-hidden p-2"><span class="block clip-reveal observe-me">Welcome To</span></div>
+                    <div class="overflow-hidden p-2"><span class="block clip-reveal delay-1 text-brand observe-me">HIGHSPOT</span></div>
+                    <div class="overflow-hidden p-2"><span class="block clip-reveal delay-2 observe-me">Club</span></div>
+                </h1>
+                <p class="mt-16 text-4xl lg:text-5xl leading-tight font-extrabold uppercase max-w-4xl fade-up delay-2 observe-me">
+                    Premium cannabis, curated for the culture.
+                </p>
+                <a href="#shop" class="mt-12 inline-block bg-white text-dark text-4xl font-black uppercase px-12 py-6 border-8 border-white hover:bg-transparent hover:text-white transition-colors duration-300 fade-up delay-2 observe-me">
+                    Explore The Menu
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- MARQUEE DIVIDER -->
+    <div class="w-full bg-brand text-dark py-6 border-b-8 border-dark overflow-hidden">
+        <div class="marquee-container text-5xl font-black uppercase tracking-widest whitespace-nowrap">
+            <span class="px-12">PREMIUM FLOWER</span><span class="px-12">•</span>
+            <span class="px-12">CURATED STRAINS</span><span class="px-12">•</span>
+            <span class="px-12">CLUB ACCESS</span><span class="px-12">•</span>
+            <span class="px-12">MEMBER ONLY DROPS</span><span class="px-12">•</span>
+            <span class="px-12">HIGHSPOT</span><span class="px-12">•</span>
+        </div>
+    </div>
+
+    <!-- FEATURED COLLECTIONS -->
+    <section id="collections" class="py-40 px-6 max-w-[2000px] mx-auto">
+        <h2 class="text-6xl md:text-8xl font-black uppercase border-b-8 border-white pb-8 mb-16 fade-up observe-me">
+            Our Signature Strains
+        </h2>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <a href="#" class="block group relative h-[60vh] img-wrap border-8 border-white clip-reveal observe-me">
+                <img src="https://images.unsplash.com/photo-1471193945509-9ad0617afabf?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Sativa cannabis collection" class="w-full h-full object-cover grayscale contrast-125">
+                <div class="absolute inset-0 bg-dark/40 flex items-center justify-center p-8 text-center">
+                    <h3 class="text-7xl lg:text-9xl font-black uppercase text-white group-hover:text-brand transition-colors">Sativa</h3>
+                </div>
+            </a>
+            <a href="#" class="block group relative h-[60vh] img-wrap border-8 border-white clip-reveal observe-me">
+                <img src="https://images.unsplash.com/photo-1603715740625-d83d4f41bbd0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Indica cannabis collection" class="w-full h-full object-cover grayscale contrast-125">
+                <div class="absolute inset-0 bg-dark/40 flex items-center justify-center p-8 text-center">
+                    <h3 class="text-7xl lg:text-9xl font-black uppercase text-white group-hover:text-brand transition-colors">Indica</h3>
+                </div>
+            </a>
+            <a href="#" class="block group relative h-[60vh] img-wrap border-8 border-white clip-reveal observe-me">
+                <img src="https://images.unsplash.com/photo-1517849845537-4d257902454a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Hybrid cannabis collection" class="w-full h-full object-cover grayscale contrast-125">
+                <div class="absolute inset-0 bg-dark/40 flex items-center justify-center p-8 text-center">
+                    <h3 class="text-7xl lg:text-9xl font-black uppercase text-white group-hover:text-brand transition-colors">Hybrid</h3>
+                </div>
+            </a>
+            <a href="#" class="block group relative h-[60vh] img-wrap border-8 border-white clip-reveal observe-me delay-1">
+                <img src="https://images.unsplash.com/photo-1528747045269-390fe33c19f2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Limited cannabis drop" class="w-full h-full object-cover grayscale contrast-125">
+                <div class="absolute inset-0 bg-dark/40 flex items-center justify-center p-8 text-center">
+                    <h3 class="text-7xl lg:text-9xl font-black uppercase text-white group-hover:text-brand transition-colors">Drops</h3>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <!-- TRENDING PRODUCTS GRID -->
+    <section id="shop" class="bg-light text-dark py-40 px-6">
+        <div class="max-w-[2000px] mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-16 border-b-8 border-dark pb-8 fade-up observe-me">
+                <h2 class="text-6xl md:text-8xl font-black uppercase">Trending<br><span class="text-brand">Strains.</span></h2>
+                <a href="#" class="text-4xl font-extrabold uppercase hover:text-brand underline decoration-8 underline-offset-8 mt-8 md:mt-0">Shop All</a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-16">
+                <article class="product-card group cursor-pointer fade-up observe-me">
+                    <div class="w-full h-[600px] bg-zinc-900 border-8 border-dark relative img-wrap">
+                        <img src="https://images.unsplash.com/photo-1501594907352-04cda38ebc29?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Sunset Haze cannabis product" class="w-full h-full object-cover grayscale contrast-125">
+                        <button class="cart-btn absolute bottom-0 left-0 w-full bg-brand text-white text-4xl font-black uppercase py-6 border-t-8 border-dark">
+                            + Add To Cart
+                        </button>
+                    </div>
+                    <div class="mt-8 flex justify-between items-start gap-4">
+                        <h3 class="text-4xl font-black uppercase leading-none">Sunset<br>Haze</h3>
+                        <span class="text-4xl font-black text-brand whitespace-nowrap">R 850</span>
+                    </div>
+                </article>
+
+                <article class="product-card group cursor-pointer fade-up observe-me delay-1">
+                    <div class="w-full h-[600px] bg-zinc-900 border-8 border-dark relative img-wrap">
+                        <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Blue Dream cannabis product" class="w-full h-full object-cover grayscale contrast-125">
+                        <button class="cart-btn absolute bottom-0 left-0 w-full bg-brand text-white text-4xl font-black uppercase py-6 border-t-8 border-dark">
+                            + Add To Cart
+                        </button>
+                    </div>
+                    <div class="mt-8 flex justify-between items-start gap-4">
+                        <h3 class="text-4xl font-black uppercase leading-none">Blue<br>Dream</h3>
+                        <span class="text-4xl font-black text-brand whitespace-nowrap">R 1,200</span>
+                    </div>
+                </article>
+
+                <article class="product-card group cursor-pointer fade-up observe-me delay-2">
+                    <div class="w-full h-[600px] bg-zinc-900 border-8 border-dark relative img-wrap">
+                        <img src="https://images.unsplash.com/photo-1568824712584-224a987b645a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Wedding Cake cannabis product" class="w-full h-full object-cover grayscale contrast-125">
+                        <button class="cart-btn absolute bottom-0 left-0 w-full bg-brand text-white text-4xl font-black uppercase py-6 border-t-8 border-dark">
+                            + Add To Cart
+                        </button>
+                    </div>
+                    <div class="mt-8 flex justify-between items-start gap-4">
+                        <h3 class="text-4xl font-black uppercase leading-none">Wedding<br>Cake</h3>
+                        <span class="text-4xl font-black text-brand whitespace-nowrap">R 450</span>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- EDITORIAL / LOREM TEXT SECTION -->
+    <section id="editorial" class="py-40 px-6 max-w-[2000px] mx-auto border-b-8 border-white/10">
+        <h2 class="text-6xl md:text-8xl font-black uppercase border-b-8 border-white pb-8 mb-16 fade-up observe-me">
+            Highspot Culture
+        </h2>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
+            <div class="text-4xl lg:text-5xl font-extrabold leading-tight uppercase fade-up observe-me text-zinc-300">
+                <p class="mb-8 text-white font-black text-5xl lg:text-7xl">Thoughtful cannabis. Elevated routines. A stronger community.</p>
+                From premium flower to rare drops, every selection is chosen for quality, taste, and the kind of vibe that turns ordinary moments into rituals. Highspot brings together connoisseurs, creators, and curious newcomers in one elevated online club experience.
+            </div>
+            <div class="h-[70vh] img-wrap bg-dark border-8 border-brand clip-reveal observe-me">
+                <img src="https://images.unsplash.com/photo-1535730142260-6b5d1f8c10b6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Cannabis lifestyle editorial" class="w-full h-full object-cover grayscale brightness-90">
+            </div>
+        </div>
+    </section>
+
+    <!-- NEWSLETTER CTA -->
+    <section class="bg-brand text-dark py-40 px-6 text-center">
+        <div class="max-w-[1500px] mx-auto fade-up observe-me">
+            <h2 class="text-[8vw] leading-none font-black uppercase mb-12">
+                Join The <br>CLUB.
+            </h2>
+            <p class="text-4xl font-extrabold uppercase mb-16 max-w-4xl mx-auto">Get access to fresh drops, member pricing, and the best of the Highspot community.</p>
+            
+            <form class="flex flex-col md:flex-row justify-center items-center gap-6 max-w-4xl mx-auto">
+                <input type="tel" placeholder="ENTER PHONE..." class="w-full md:w-2/3 bg-transparent border-8 border-dark px-8 py-6 text-4xl font-black text-dark placeholder-dark/50 focus:outline-none uppercase">
+                <button type="submit" class="w-full md:w-1/3 bg-dark text-white text-4xl font-black uppercase px-12 py-6 border-8 border-dark hover:bg-transparent hover:text-dark transition-colors duration-300">
+                    Join
+                </button>
+            </form>
+        </div>
+    </section>
+
+
+    </c>
+
+    <!-- FOOTER -->
+    <footer id="contact" class="bg-dark text-light pt-40 pb-20 px-6">
+        <div class="max-w-[2000px] mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-24 border-b-8 border-white pb-24 mb-12 fade-up observe-me">
+                <div>
+                    <h2 class="text-7xl lg:text-8xl font-black uppercase mb-12 text-brand">HIGHSPOT</h2>
+                    <a href="mailto:hello@highspotclub.co.za" class="block text-4xl lg:text-6xl font-black hover:text-brand transition-colors mb-8 break-words">
+                        HELLO@HIGHSPOTCLUB.CO.ZA
+                    </a>
+                    <p class="text-3xl font-extrabold uppercase">Curated cannabis. Club access. Elevated culture.</p>
+                </div>
+
+                <div class="flex flex-col gap-8 lg:text-right">
+                    <a href="#" class="text-5xl font-black uppercase hover:text-brand transition-colors">Instagram</a>
+                    <a href="#" class="text-5xl font-black uppercase hover:text-brand transition-colors">Community</a>
+                    <a href="#" class="text-5xl font-black uppercase hover:text-brand transition-colors">Shipping</a>
+                    <a href="#" class="text-5xl font-black uppercase hover:text-brand transition-colors">Returns</a>
+                </div>
+            </div>
+
+            <div class="flex flex-col md:flex-row justify-between items-center gap-8 fade-up observe-me">
+                <p class="text-3xl font-black uppercase">© 2026 HIGHSPOT CLUB</p>
+                <div class="flex gap-6">
+                    <span class="text-3xl font-black uppercase text-brand">Visa</span>
+                    <span class="text-3xl font-black uppercase text-brand">MC</span>
+                    <span class="text-3xl font-black uppercase text-brand">Zapper</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- INTERSECTION OBSERVER SCRIPT -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const menuBtn = document.getElementById('menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileLinks = document.querySelectorAll('.mobile-link');
+
+            const toggleMenu = () => {
+                mobileMenu.classList.toggle('menu-open');
+                if (mobileMenu.classList.contains('menu-open')) {
+                    menuBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="4" stroke="currentColor" class="w-16 h-16 text-dark"><path stroke-linecap="square" stroke-linejoin="miter" d="M6 18L18 6M6 6l12 12" /></svg>';
+                } else {
+                    menuBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="4" stroke="currentColor" class="w-16 h-16"><path stroke-linecap="square" stroke-linejoin="miter" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" /></svg>';
+                }
+            };
+
+            menuBtn.addEventListener('click', toggleMenu);
+            mobileLinks.forEach(link => link.addEventListener('click', toggleMenu));
+
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.observe-me').forEach((element) => {
+                observer.observe(element);
+            });
+            
+            setTimeout(() => {
+                document.querySelectorAll('.clip-reveal:not(.observe-me)').forEach(el => el.classList.add('is-visible'));
+            }, 100);
+        });
+    </script>
+
+    
+<!-- #!/engine/node/ analytics() --> 
+
+
+</body>
+</html>
